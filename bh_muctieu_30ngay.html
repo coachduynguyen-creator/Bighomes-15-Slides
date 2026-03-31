@@ -626,7 +626,103 @@ const st=document.createElement('style');
 st.textContent='@keyframes charIn{to{opacity:1;transform:translateY(0)}}';
 document.head.appendChild(st);
 
-show(0);
+// Mobile scroll mode
+function isMobile(){return window.innerWidth<=768;}
+
+function applyMode(){
+  if(isMobile()){
+    document.body.style.overflow='auto';
+    document.body.style.height='auto';
+    slides.forEach(s=>{
+      s.style.display='flex';
+      s.style.width='100%';
+      s.style.height='auto';
+      s.style.minHeight='auto';
+      s.style.position='relative';
+      s.style.overflowX='hidden';
+    });
+    document.querySelector('.nav').style.display='none';
+    document.getElementById('pcv').style.display='none';
+  } else {
+    document.body.style.overflow='hidden';
+    document.body.style.height='100vh';
+    slides.forEach(s=>{
+      s.style.display='none';
+      s.style.width='100vw';
+      s.style.height='100vh';
+      s.style.minHeight='';
+      s.style.position='relative';
+    });
+    document.querySelector('.nav').style.display='flex';
+    document.getElementById('pcv').style.display='block';
+    show(cur);
+  }
+}
+
+applyMode();
+window.addEventListener('resize',()=>applyMode());
+if(!isMobile()) show(0);
 </script>
+
+<style>
+@media(max-width:768px){
+  body{overflow:auto !important;height:auto !important;}
+  .slide{overflow:visible !important;padding:40px 18px 52px !important;width:100% !important;height:auto !important;min-height:auto !important;}
+  .content{padding:0 !important;max-width:100% !important;}
+  .bar-left,.bar-right,.border-practice{display:none !important;}
+
+  /* Font scaling */
+  [style*="font-size:54px"]{font-size:30px !important;line-height:1.15 !important;}
+  [style*="font-size:72px"]{font-size:34px !important;letter-spacing:-1px !important;}
+  [style*="font-size:48px"]{font-size:26px !important;}
+  [style*="font-size:36px"]{font-size:22px !important;}
+  [style*="font-size:32px"]{font-size:20px !important;}
+  [style*="font-size:28px"]{font-size:18px !important;}
+  [style*="font-size:260px"]{display:none !important;}
+  [style*="font-size:130px"]{font-size:56px !important;}
+
+  /* Grids stack */
+  .g2,.g3{grid-template-columns:1fr !important;gap:12px !important;}
+
+  /* Cards */
+  .card,.card-dark{padding:16px !important;}
+  .ct{font-size:16px !important;}
+  .cb{font-size:14px !important;}
+  .ct-d{font-size:16px !important;}
+  .cb-d{font-size:14px !important;}
+
+  /* Table scroll */
+  table{display:block !important;overflow-x:auto !important;-webkit-overflow-scrolling:touch;}
+  th,td{white-space:nowrap;padding:9px 11px !important;font-size:12px !important;}
+
+  /* Flow */
+  .frow{padding:11px 13px !important;}
+  .ftxt{font-size:14px !important;}
+
+  /* Steps */
+  .stxt{font-size:15px !important;}
+  .srow{padding:11px 14px !important;}
+
+  /* Takeaway */
+  .trow{padding:13px 15px !important;}
+  .ttxt{font-size:15px !important;}
+  .tnum{font-size:24px !important;min-width:26px !important;}
+
+  /* Eyebrow */
+  .eyebrow,.eyebrow-d{font-size:16px !important;margin-bottom:12px !important;}
+  .concl{font-size:14px !important;}
+  .pcap{font-size:15px !important;}
+
+  /* Funnel side-by-side to column */
+  [style*="display:flex;gap:28px"]{flex-direction:column !important;gap:14px !important;}
+  [style*="width:280px"]{width:100% !important;}
+
+  /* Section divider */
+  .bg-section{padding:36px 18px 44px !important;}
+
+  /* Footer */
+  .footer-dark,.footer-light,.footer-parchment{font-size:10px !important;letter-spacing:1.5px !important;height:40px !important;}
+}
+</style>
 </body>
 </html>
