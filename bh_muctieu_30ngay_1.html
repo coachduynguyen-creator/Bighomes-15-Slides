@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lập Mục Tiêu và Kế Hoạch 30 Ngày | Bighomes 15</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,'Segoe UI',Arial,sans-serif;overflow:hidden;width:100vw;height:100vh;}
+.slide{display:none;width:100vw;height:100vh;position:relative;overflow:hidden;padding-bottom:36px;flex-direction:column;justify-content:center;align-items:center;}
+.slide.active{display:flex;}
+
+/* Backgrounds — Bighomes palette */
+.bg-cover,.bg-closing{background-color:#1A3A1A;background-image:radial-gradient(rgba(51,158,78,0.18) 1.3px,transparent 1.3px);background-size:30px 30px;}
+.bg-cover::before,.bg-closing::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(26,58,26,0.55) 25%,transparent 65%);pointer-events:none;z-index:1;}
+.bg-agenda{background-color:#0d1f0d;background-image:radial-gradient(rgba(51,158,78,0.20) 1.3px,transparent 1.3px);background-size:30px 30px;}
+.bg-agenda::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(13,31,13,0.5) 25%,transparent 65%);pointer-events:none;z-index:1;}
+.bg-section{background-color:#e8f5e9;background-image:linear-gradient(rgba(51,158,78,0.12) 1px,transparent 1px),linear-gradient(90deg,rgba(51,158,78,0.12) 1px,transparent 1px);background-size:40px 40px;}
+.bg-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,#e8f5e9 30%,transparent 65%);pointer-events:none;z-index:1;}
+.bg-content{background:#ffffff;background-image:radial-gradient(rgba(51,158,78,0.18) 1.5px,transparent 1.5px);background-size:28px 28px;}
+.bg-content::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,#ffffff 30%,transparent 65%);pointer-events:none;z-index:1;}
+.bg-practice{background:#f5fbf5;background-image:radial-gradient(rgba(51,158,78,0.15) 1.4px,transparent 1.4px);background-size:28px 28px;}
+.bg-practice::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,#f5fbf5 32%,transparent 66%);pointer-events:none;z-index:1;}
+.border-practice{position:absolute;inset:0;border:2px solid rgba(51,158,78,0.4);pointer-events:none;z-index:5;}
+
+/* Frame accents */
+.bar-top{position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,transparent 6%,#339E4E 24%,#339E4E 76%,transparent 94%);z-index:5;}
+.bar-left{position:absolute;left:0;top:0;bottom:0;width:5px;background:linear-gradient(180deg,transparent 5%,#339E4E 22%,#339E4E 78%,transparent 95%);z-index:5;}
+.bar-right{position:absolute;right:0;top:0;bottom:0;width:5px;background:linear-gradient(180deg,transparent 5%,rgba(51,158,78,0.3) 22%,rgba(51,158,78,0.3) 78%,transparent 95%);z-index:5;}
+
+/* Footer */
+.footer-dark{position:absolute;bottom:0;left:0;right:0;height:36px;display:flex;align-items:center;justify-content:center;gap:10px;font-size:11px;letter-spacing:2.5px;font-variant:small-caps;text-transform:uppercase;color:#5BBF70;background:rgba(0,0,0,0.3);border-top:1px solid rgba(51,158,78,0.2);z-index:10;}
+.footer-light{position:absolute;bottom:0;left:0;right:0;height:36px;display:flex;align-items:center;justify-content:center;gap:10px;font-size:11px;letter-spacing:2.5px;font-variant:small-caps;text-transform:uppercase;color:#1E6B30;background:rgba(255,255,255,0.92);border-top:1px solid rgba(51,158,78,0.2);z-index:10;}
+.footer-parchment{position:absolute;bottom:0;left:0;right:0;height:36px;display:flex;align-items:center;justify-content:center;gap:10px;font-size:11px;letter-spacing:2.5px;font-variant:small-caps;text-transform:uppercase;color:#1E6B30;background:rgba(232,245,233,0.92);border-top:1px solid rgba(51,158,78,0.2);z-index:10;}
+.bh-badge{width:22px;height:22px;background:#339E4E;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;color:#fff;flex-shrink:0;}
+
+/* Nav */
+.nav{position:fixed;bottom:44px;right:24px;display:flex;align-items:center;gap:10px;z-index:200;}
+.nav-counter{font-size:12px;color:#aaa;}
+.nav-btn{background:rgba(51,158,78,0.08);border:1px solid rgba(51,158,78,0.28);color:#1E6B30;padding:6px 14px;border-radius:6px;font-size:13px;cursor:pointer;transition:.18s;}
+.nav-btn:hover{background:rgba(51,158,78,0.17);}
+
+/* Content wrapper */
+.content{position:relative;z-index:3;width:100%;max-width:1120px;padding:0 44px;}
+
+/* Cards */
+.card{background:#ffffff;border:1.5px solid rgba(51,158,78,0.2);border-top:3px solid #2E7D32;border-radius:14px;padding:30px 26px 26px;box-shadow:0 4px 22px rgba(0,0,0,0.09),0 1px 4px rgba(0,0,0,0.06);position:relative;overflow:hidden;}
+.card-dark{background:rgba(255,255,255,0.06);border:1.5px solid rgba(51,158,78,0.25);border-top:3px solid #339E4E;border-radius:14px;padding:30px 26px 26px;position:relative;overflow:hidden;}
+.cnum{position:absolute;bottom:-4px;right:12px;font-size:80px;font-weight:900;color:rgba(51,158,78,0.07);line-height:1;pointer-events:none;}
+.cnum-d{position:absolute;bottom:-4px;right:12px;font-size:80px;font-weight:900;color:rgba(51,158,78,0.12);line-height:1;pointer-events:none;}
+.cl{font-size:12px;letter-spacing:2.5px;color:#1E6B30;text-transform:uppercase;font-weight:900;margin-bottom:9px;}
+.cl-d{font-size:12px;letter-spacing:2.5px;color:#5BBF70;text-transform:uppercase;font-weight:900;margin-bottom:9px;}
+.ct{font-size:20px;font-weight:900;color:#0d0d0d;margin-bottom:8px;line-height:1.3;text-transform:uppercase;}
+.ct-d{font-size:20px;font-weight:900;color:#ffffff;margin-bottom:8px;line-height:1.3;text-transform:uppercase;}
+.cb{font-size:16px;color:#2a2a2a;line-height:1.65;font-weight:500;}
+.cb-d{font-size:16px;color:rgba(255,255,255,0.82);line-height:1.65;font-weight:500;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:22px;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+
+/* Practice */
+.badge-p{display:inline-flex;align-items:center;background:#1E6B30;color:#fff;font-size:12px;font-weight:900;letter-spacing:2.5px;text-transform:uppercase;padding:8px 20px;border-radius:6px;box-shadow:0 3px 12px rgba(30,107,48,0.35);}
+.badge-t{display:inline-flex;align-items:center;font-size:14px;font-weight:800;color:#1E6B30;border:1.5px solid rgba(30,107,48,0.3);padding:5px 14px;border-radius:8px;background:rgba(51,158,78,0.08);margin-left:10px;}
+.steps{background:#fff;border-radius:12px;border:1.5px solid rgba(51,158,78,0.18);box-shadow:0 2px 14px rgba(0,0,0,0.08);overflow:hidden;}
+.srow{display:flex;gap:16px;align-items:flex-start;padding:15px 22px;border-bottom:1px solid rgba(51,158,78,0.12);}
+.srow:last-child{border-bottom:none;}
+.snum{width:32px;height:32px;border-radius:50%;background:#2E7D32;color:#fff;font-weight:900;font-size:15px;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.stxt{font-size:20px;color:#111;line-height:1.6;font-weight:600;padding-top:3px;}
+.snote{font-size:15px;color:#666;font-style:italic;margin-top:4px;}
+.pcap{font-size:22px;font-weight:700;color:#1a3a1a;font-style:italic;margin-top:14px;}
+
+/* Takeaway */
+.trow{display:flex;align-items:flex-start;gap:20px;background:rgba(255,255,255,0.07);border:1.5px solid rgba(51,158,78,0.22);border-radius:12px;padding:17px 22px;margin-bottom:11px;box-shadow:0 4px 16px rgba(0,0,0,0.12);}
+.tnum{font-size:32px;font-weight:900;color:#339E4E;min-width:34px;line-height:1.1;flex-shrink:0;}
+.ttxt{font-size:20px;font-weight:700;color:#ffffff;line-height:1.5;}
+.tgreen{color:#5BBF70;}
+
+/* Flow */
+.flow{display:flex;flex-direction:column;gap:10px;}
+.frow{display:flex;align-items:flex-start;gap:16px;background:#fff;border:1.5px solid rgba(51,158,78,0.18);border-radius:12px;padding:16px 20px;box-shadow:0 2px 10px rgba(0,0,0,0.06);}
+.fnum{font-size:18px;font-weight:900;color:#339E4E;width:36px;height:36px;border-radius:8px;background:rgba(51,158,78,0.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.ftxt{font-size:18px;font-weight:600;color:#0d0d0d;line-height:1.55;padding-top:3px;}
+
+/* Utility */
+.gold-line{width:60px;height:2px;background:#339E4E;margin:0 auto;}
+.eyebrow{font-size:24px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:#1E6B30;margin-bottom:20px;}
+.eyebrow-d{font-size:24px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.85);margin-bottom:22px;}
+.caption{font-size:28px;font-weight:700;font-style:italic;color:#1a3a1a;text-align:center;margin-top:18px;}
+.concl{font-size:24px;font-weight:900;color:#1E6B30;margin-top:14px;}
+
+/* Animations */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes scaleIn{from{opacity:0;transform:scale(0.88)}to{opacity:1;transform:scale(1)}}
+@keyframes slideR{from{opacity:0;transform:translateX(-24px)}to{opacity:1;transform:translateX(0)}}
+@keyframes slideL{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:translateX(0)}}
+@keyframes lineGrow{from{transform:scaleX(0);transform-origin:left}to{transform:scaleX(1);transform-origin:left}}
+@keyframes ringExpand{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes glowBreath{0%,100%{box-shadow:0 0 10px 2px rgba(51,158,78,0.28),0 6px 24px rgba(26,58,26,0.25)}50%{box-shadow:0 0 32px 10px rgba(51,158,78,0.62),0 8px 36px rgba(26,58,26,0.42)}}
+@keyframes pulseRing{0%,100%{box-shadow:0 0 0 0 rgba(51,158,78,0.55)}50%{box-shadow:0 0 0 14px rgba(51,158,78,0)}}
+@keyframes pulseOp{0%,100%{opacity:.35}50%{opacity:1}}
+@keyframes charIn{to{opacity:1;transform:translateY(0)}}
+.a1{animation:fadeUp .45s .1s ease both;opacity:0;animation-fill-mode:both;}
+.a2{animation:fadeUp .45s .25s ease both;opacity:0;animation-fill-mode:both;}
+.a3{animation:fadeUp .45s .4s ease both;opacity:0;animation-fill-mode:both;}
+.a4{animation:fadeUp .45s .55s ease both;opacity:0;animation-fill-mode:both;}
+.a5{animation:fadeUp .45s .7s ease both;opacity:0;animation-fill-mode:both;}
+.aL{animation:slideL .5s .2s ease both;opacity:0;animation-fill-mode:both;}
+.aR{animation:slideR .5s .1s ease both;opacity:0;animation-fill-mode:both;}
+.aS{animation:scaleIn .5s .1s ease both;opacity:0;animation-fill-mode:both;}
+</style>
+</head>
+<body>
+
+<!-- SLIDE 1: COVER -->
+<div class="slide active bg-cover" id="s1">
+  <div class="bar-top"></div><div class="bar-left"></div><div class="bar-right"></div>
+  <div class="content" style="text-align:center;max-width:840px;padding:0 48px;">
+    <div class="gold-line a1" style="margin-bottom:22px;"></div>
+    <div class="a2" style="font-size:12px;font-weight:700;letter-spacing:3px;color:rgba(255,255,255,0.75);text-transform:uppercase;margin-bottom:16px;">Đào Tạo Nội Bộ · Bighomes 15 · 30 Phút</div>
+    <div class="a3" data-title style="font-size:54px;font-weight:900;color:#ffffff;line-height:1.12;text-transform:uppercase;letter-spacing:-1px;">
+      Lập Mục Tiêu<br><span style="color:#5BBF70;">và Kế Hoạch</span><br>30 Ngày Ra Hàng
+    </div>
+    <div class="a4" style="width:80px;height:2px;background:linear-gradient(90deg,transparent,#339E4E,transparent);margin:22px auto;"></div>
+    <div class="a5" style="font-size:20px;color:rgba(255,255,255,0.78);font-style:italic;font-weight:500;line-height:1.65;">Vinhomes Hạ Long Xanh · Đợt Ra Hàng Sắp Tới</div>
+    <div class="gold-line a5" style="margin-top:22px;"></div>
+  </div>
+  <div class="footer-dark"><div class="bh-badge">BH</div>BIGHOMES 15 &nbsp;|&nbsp; LẬP MỤC TIÊU 30 NGÀY</div>
+</div>
+
+<!-- SLIDE 2: AGENDA -->
+<div class="slide bg-agenda" id="s2">
+  <div class="bar-top"></div><div class="bar-left"></div><div class="bar-right"></div>
+  <div class="content" style="position:relative;z-index:3;">
+    <div class="eyebrow-d a1">Nội Dung Buổi Hôm Nay</div>
+    <div class="g3 a2" style="margin-top:8px;">
+      <div class="card-dark">
+        <div class="cnum-d">01</div>
+        <div class="cl-d">10 phút</div>
+        <div class="ct-d">Khung Mục Tiêu Đúng</div>
+        <div class="cb-d">Công thức ngược từ booking về hành động hàng ngày.</div>
+      </div>
+      <div class="card-dark">
+        <div class="cnum-d">02</div>
+        <div class="cl-d">15 phút</div>
+        <div class="ct-d">Kế Hoạch 30 Ngày</div>
+        <div class="cb-d">3 giai đoạn, từng tuần rõ mục tiêu và hành động ưu tiên.</div>
+      </div>
+      <div class="card-dark">
+        <div class="cnum-d">03</div>
+        <div class="cl-d">Tiếp theo</div>
+        <div class="ct-d">Chia Sẻ Cá Nhân</div>
+        <div class="cb-d">Mỗi người trình bày mục tiêu và hành động ngày mai.</div>
+      </div>
+    </div>
+    <div class="a3" style="margin-top:28px;background:rgba(51,158,78,0.12);border-left:4px solid #339E4E;border-radius:8px;padding:16px 22px;">
+      <div style="font-size:20px;font-weight:700;color:#ffffff;font-style:italic;">"Không có con số, không có kế hoạch. Chỉ có hy vọng."</div>
+    </div>
+  </div>
+  <div class="footer-dark"><div class="bh-badge">BH</div>BIGHOMES 15 &nbsp;|&nbsp; LẬP MỤC TIÊU 30 NGÀY</div>
+</div>
+
+<!-- SLIDE 3: SECTION OPENER PHẦN 1 -->
+<div class="slide bg-section" id="s3">
+  <div class="bar-top"></div><div class="bar-left"></div><div class="bar-right"></div>
+  <div class="content" style="position:relative;z-index:3;">
+    <div class="a1" style="font-size:12px;font-weight:700;letter-spacing:3px;color:#1E6B30;text-transform:uppercase;margin-bottom:16px;">Phần 01 · 10 Phút</div>
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:32px;">
+      <div class="a2" style="font-size:72px;font-weight:900;color:#0d0d0d;line-height:1.05;text-transform:uppercase;letter-spacing:-2px;">Khung<br><span style="color:#1E6B30;">Mục Tiêu</span><br>Đúng</div>
+      <div class="a2" style="font-size:260px;font-weight:900;line-height:0.85;color:rgba(51,158,78,0.15);pointer-events:none;letter-spacing:-12px;flex-shrink:0;margin-top:-10px;">01</div>
+    </div>
+    <div class="a3" style="width:100%;height:2px;background:linear-gradient(90deg,#2E7D32,rgba(51,158,78,0.08));margin:22px 0 20px;"></div>
+    <div class="a4" style="font-size:22px;font-style:italic;font-weight:500;color:#3a3a3a;line-height:1.55;">Tính ngược từ số booking muốn đạt về hành động bạn cần làm mỗi ngày.</div>
+  </div>
+  <div class="footer-parchment"><div class="bh-badge">BH</div>BIGHOMES 15 &nbsp;|&nbsp; LẬP MỤC TIÊU 30 NGÀY</div>
+</div>
+
+<!-- SLIDE 4: CÔNG THỨC NGƯỢC - phễu 5 tầng -->
+<div class="slide bg-content" id="s4">
+  <div class="bar-top"></div><div class="bar-left"></div><div class="bar-right"></div>
+  <div class="content" style="position:relative;z-index:3;">
+    <div class="a1" style="font-size:12px;font-weight:700;letter-spacing:3px;color:#1E6B30;text-transform:uppercase;margin-bottom:4px;">Công Thức Ngược</div>
+    <div class="a2" style="font-size:32px;font-weight:900;color:#0d0d0d;margin-bottom:14px;line-height:1.2;">Từ Kết Quả về Hành Động</div>
+    <div class="a3" style="display:flex;gap:28px;align-items:flex-start;">
+      <!-- Phễu bên trái -->
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:0;">
+        <!-- Tầng 1: Booking -->
+        <div style="width:100%;background:#1A3A1A;border-radius:10px 10px 0 0;padding:13px 22px;display:flex;align-items:center;justify-content:space-between;animation:glowBreath 3s 1s ease-in-out infinite;">
+          <div>
+            <div style="font-size:10px;font-weight:900;letter-spacing:2px;color:#5BBF70;text-transform:uppercase;margin-bottom:2px;">Kết quả cuối</div>
+            <div style="font-size:20px;font-weight:900;color:#ffffff;">Số Booking</div>
+          </div>
+          <div style="font-size:36px;font-weight:900;color:#5BBF70;">X</div>
+        </div>
+        <div style="width:2px;height:7px;background:#339E4E;"></div>
+        <!-- Tầng 2: Gặp -->
+        <div style="width:92%;background:#1E5E2A;border-radius:7px;padding:11px 20px;display:flex;align-items:center;justify-content:space-between;">
+          <div>
+            <div style="font-size:10px;font-weight:900;letter-spacing:2px;color:rgba(91,191,112,0.85);text-transform:uppercase;margin-bottom:2px;">Tư vấn trực tiếp</div>
+            <div style="font-size:18px;font-weight:900;color:#ffffff;">Số Cuộc Gặp</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:28px;font-weight:900;color:#5BBF70;">Y</div>
+            <div style="font-size:10px;color:rgba(255,255,255,0.65);">% gặp ra booking</div>
+          </div>
+        </div>
+        <div style="width:2px;height:7px;background:#339E4E;"></div>
+        <!-- Tầng 3: Lead -->
+        <div style="width:84%;background:#2d5a2d;border-radius:7px;padding:10px 18px;display:flex;align-items:center;justify-content:space-between;">
+          <div>
+            <div style="font-size:10px;font-weight:900;letter-spacing:2px;color:rgba(91,191,112,0.75);text-transform:uppercase;margin-bottom:2px;">Nuôi song song</div>
+            <div style="font-size:17px;font-weight:900;color:#ffffff;">Số Lead Tiềm Năng</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:26px;font-weight:900;color:rgba(91,191,112,0.9);">Z</div>
+            <div style="font-size:10px;color:rgba(255,255,255,0.6);">% data ra lead</div>
+          </div>
+        </div>
+        <div style="width:2px;height:7px;background:#339E4E;"></div>
+        <!-- Tầng 4: Data -->
+        <div style="width:76%;background:#3d7a3d;border-radius:7px;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;">
+          <div>
+            <div style="font-size:10px;font-weight:900;letter-spacing:2px;color:rgba(91,191,112,0.7);text-transform:uppercase;margin-bottom:2px;">Chất lượng marketing</div>
+            <div style="font-size:16px;font-weight:900;color:#ffffff;">Tổng Data Tiếp Cận</div>
+          </div>
+          <div style="font-size:22px;font-weight:900;color:rgba(91,191,112,0.8);">W</div>
+        </div>
+        <div style="width:2px;height:7px;background:#339E4E;"></div>
+        <!-- Tầng 5: Hành động -->
+        <div style="width:68%;background:#4a8a4a;border-radius:0 0 7px 7px;padding:9px 14px;display:flex;align-items:center;justify-content:space-between;">
+          <div>
+            <div style="font-size:10px;font-weight:900;letter-spacing:2px;color:rgba(91,191,112,0.65);text-transform:uppercase;margin-bottom:2px;">Bạn kiểm soát</div>
+            <div style="font-size:15px;font-weight:900;color:#ffffff;">Hành Động Mỗi Ngày</div>
+          </div>
+          <div style="font-size:20px;font-weight:900;color:rgba(91,191,112,0.8);">A</div>
+        </div>
+      </div>
+      <!-- Chú thích bên phải -->
+      <div style="width:280px;display:flex;flex-direction:column;gap:10px;padding-top:4px;">
+        <div style="background:#f5fbf5;border:1.5px solid rgba(51,158,78,0.25);border-left:4px solid #1A3A1A;border-radius:8px;padding:12px 14px;">
+          <div style="font-size:12px;font-weight:900;color:#1A3A1A;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">X = Booking</div>
+          <div style="font-size:13px;color:#333;line-height:1.5;">Đây là mục tiêu. Càng nhiều booking, càng nhiều cơ hội khớp căn đẹp ngày ra hàng.</div>
+        </div>
+        <div style="background:#f5fbf5;border:1.5px solid rgba(51,158,78,0.2);border-left:4px solid #2d5a2d;border-radius:8px;padding:12px 14px;">
+          <div style="font-size:12px;font-weight:900;color:#2d5a2d;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Z = Lead tiềm năng</div>
+          <div style="font-size:13px;color:#333;line-height:1.5;">Tỷ lệ Data ra Lead = đo chất lượng marketing và danh sách bạn đang tiếp cận.</div>
+        </div>
+        <div style="background:#f5fbf5;border:1.5px solid rgba(51,158,78,0.2);border-left:4px solid #4a8a4a;border-radius:8px;padding:12px 14px;">
+          <div style="font-size:12px;font-weight:900;color:#4a8a4a;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">A = Hành động/ngày</div>
+          <div style="font-size:13px;color:#333;line-height:1.5;">Đây là thứ duy nhất bạn kiểm soát 100%. Làm đủ A mỗi ngày, kết quả tự đến.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-light"><div class="bh-badge">BH</div>BIGHOMES 15 &nbsp;|&nbsp; LẬP MỤC TIÊU 30 NGÀY</div>
+</div>
+
+<!-- SLIDE 5: VÍ DỤ SỐ THỰC TẾ -->
+<div class="slide bg-content" id="s5">
+  <div class="bar-top"></div><div class="bar-left"></div><div class="bar-right"></div>
+  <div class="content" style="position:relative;z-index:3;">
+    <div class="a1" style="font-size:12px;font-weight:700;letter-spacing:3px;color:#1E6B30;text-transform:uppercase;margin-bottom:4px;">Ví Dụ Tính Thực Tế</div>
+    <div class="a2" style="font-size:32px;font-weight:900;color:#0d0d0d;margin-bottom:16px;">Mục Tiêu: 5 Booking trong 30 Ngày</div>
+    <div class="g2 a3">
+      <div>
+        <div class="flow">
+          <div class="frow">
+            <div class="fnum" style="background:#1A3A1A;color:#5BBF70;font-size:20px;">5</div>
+            <div><div class="ftxt">Booking cần đạt</div><div style="font-size:13px;color:#666;margin-top:1px;">Mục tiêu tối thiểu</div></div>
+          </div>
+          <div style="width:2px;height:8px;background:#339E4E;margin-left:17px;"></div>
+          <div class="frow">
+            <div class="fnum" style="font-size:20px;">20</div>
+            <div><div class="ftxt">Cuộc gặp tư vấn</div><div style="font-size:13px;color:#666;margin-top:1px;">Tỷ lệ gặp ra booking: 25%</div></div>
+          </div>
+          <div style="width:2px;height:8px;background:#339E4E;margin-left:17px;"></div>
+          <div class="frow">
+            <div class="fnum" style="font-size:18px;">60</div>
+            <div><div class="ftxt">Lead tiềm năng đang nuôi</div><div style="font-size:13px;color:#666;margin-top:1px;">Tỷ lệ data ra lead: 30%</div></div>
+          </div>
+          <div style="width:2px;height:8px;background:#339E4E;margin-left:17px;"></div>
+          <div class="frow">
+            <div class="fnum" style="font-size:17px;background:#3d7a3d;color:#fff;">200</div>
+            <div><div class="ftxt">Data cần tiếp cận</div><div style="font-size:13px;color:#666;margin-top:1px;">Nguồn: cold list + giới thiệu + MXH</div></div>
+          </div>
+          <div style="width:2px;height:8px;background:#339E4E;margin-left:17px;"></div>
+          <div class="frow" style="border:2px solid #339E4E;">
+            <div class="fnum" style="background:#339E4E;color:#fff;font-size:18px;">7</div>
+            <div><div class="ftxt" style="color:#1E6B30;font-weight:900;">Hành động mỗi ngày</div><div style="font-size:13px;color:#666;margin-top:1px;">Tiếp cận data mới hoặc follow-up lead</div></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="height:100%;">
+          <div class="cl">Điền số của bạn</div>
+          <div style="font-size:15px;color:#2a2a2a;">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid rgba(51,158,78,0.15);">
+              <span style="font-weight:600;">Booking mục tiêu:</span>
+              <span style="font-size:20px;font-weight:900;color:#1A3A1A;">___ booking</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid rgba(51,158,78,0.15);">
+              <span style="font-weight:600;">Tỷ lệ gặp ra booking:</span>
+              <span style="font-size:20px;font-weight:900;color:#1A3A1A;">___%</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid rgba(51,158,78,0.15);">
+              <span style="font-weight:600;">Số gặp cần có:</span>
+              <span style="font-size:20px;font-weight:900;color:#1A3A1A;">___ lần</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid rgba(51,158,78,0.15);">
+              <span style="font-weight:600;">Tỷ lệ data ra lead:</span>
+              <span style="font-size:20px;font-weight:900;color:#1A3A1A;">___%</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid rgba(51,158,78,0.15);">
+              <span style="font-weight:600;">Lead cần nuôi:</span>
+              <span style="font-size:20px;font-weight:900;color:#1A3A1A;">___ người</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid rgba(51,158,78,0.15);">
+              <span style="font-weight:600;">Data cần tiếp cận:</span>
+              <span style="font-size:20px;font-weight:900;color:#1A3A1A;">___ liên hệ</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;">
+              <span style="font-weight:600;">Hành động mỗi ngày:</span>
+              <span style="font-size:20px;font-weight:900;color:#339E4E;">___ lần</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-light"><div class="bh-badge">BH</div>BIGHOMES 15 &nbsp;|&nbsp; LẬP MỤC TIÊU 30 NGÀY</div>
+</div>
+
+<!-- SLIDE 6: SECTION OPENER PHẦN 2 -->
+<div class="slide bg-section" id="s6">
+  <div class="bar-top"></div><div class="bar-left"></div><div class="bar-right"></div>
+  <div class="content" style="position:relative;z-index:3;">
+    <div class="a1" style="font-size:12px;font-weight:700;letter-spacing:3px;color:#1E6B30;text-transform:uppercase;margin-bottom:16px;">Phần 02 · 15 Phút</div>
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:32px;">
+      <div class="a2" style="font-size:72px;font-weight:900;color:#0d0d0d;line-height:1.05;text-transform:uppercase;letter-spacing:-2px;">Kế Hoạch<br><span style="color:#1E6B30;">30 Ngày</span><br>Thực Thi</div>
+      <div class="a2" style="font-size:260px;font-weight:900;line-height:0.85;color:rgba(51,158,78,0.15);pointer-events:none;letter-spacing:-12px;flex-shrink:0;margin-top:-10px;">02</div>
+    </div>
+    <div class="a3" style="width:100%;height:2px;background:linear-gradient(90deg,#2E7D32,rgba(51,158,78,0.08));margin:22px 0 20px;"></div>
+    <div class="a4" style="font-size:22px;font-style:italic;font-weight:500;color:#3a3a3a;line-height:1.55;">Ba giai đoạn, mỗi tuần có ưu tiên và mốc kiểm tra rõ ràng.</div>
+  </div>
+  <div class="footer-parchment"><div class="bh-badge">BH</div>BIGHOMES 15 &nbsp;|&nbsp; LẬP MỤC TIÊU 30 NGÀY</div>
+</div>
+
+<!-- SLIDE 7: 3 GIAI ĐOẠN TỔNG QUAN -->
+<div class="slide bg-content" id="s7">
+  <div class="bar-top"></div><div class="bar-left"></div><div class="bar-right"></div>
+  <div class="content" style="position:relative;z-index:3;">
+    <div class="a1" style="font-size:12px;font-weight:700;letter-spacing:3px;color:#1E6B30;text-transform:uppercase;margin-bottom:4px;">Trọng Tâm Từng Giai Đoạn</div>
+    <div class="a2" style="font-size:32px;font-weight:900;color:#0d0d0d;margin-bottom:6px;">30 Ngày · 3 Trọng Tâm</div>
+    <div class="a2" style="font-size:15px;color:#555;font-style:italic;margin-bottom:18px;">Giai đoạn là ưu tiên, không phải ranh giới cứng. Khách nào sẵn sàng thì chốt booking ngay bất cứ lúc nào.</div>
+    <div class="g3 a3">
+      <div class="card" style="border-top-color:#1A3A1A;">
+        <div class="cnum" style="color:rgba(26,58,26,0.08);">1</div>
+        <div style="display:inline-block;background:#1A3A1A;color:#5BBF70;font-size:11px;font-weight:900;letter-spacing:2px;padding:4px 12px;border-radius:4px;margin-bottom:10px;text-transform:uppercase;">Tuần 1 - 2</div>
+        <div class="ct">Tìm Kiếm và Tiếp Cận Rộng</div>
+        <div class="cb" style="font-size:15px;">Đẩy mạnh data mới, phân loại mức độ tiềm năng, bắt đầu nuôi lead. Khách nóng: tư vấn và đề nghị booking ngay.</div>
+        <div style="margin-top:12px;padding:10px 12px;background:rgba(51,158,78,0.08);border-radius:6px;border-left:3px solid #339E4E;">
+          <div style="font-size:13px;font-weight:700;color:#1E6B30;margin-bottom:3px;">Luôn nhớ:</div>
+          <div style="font-size:13px;color:#333;line-height:1.5;">Booking sớm = giữ quyền chọn căn đẹp nhất. Nói rõ điều này với khách từ lần gặp đầu tiên.</div>
+        </div>
+        <div style="margin-top:10px;border-top:1px solid rgba(51,158,78,0.15);padding-top:10px;">
+          <div style="font-size:12px;font-weight:700;color:#1E6B30;margin-bottom:4px;">Mốc cuối T2:</div>
+          <div style="font-size:14px;color:#333;">Z lead đang nuôi. Đã có booking đầu tiên nếu có khách sẵn sàng.</div>
+        </div>
+      </div>
+      <div class="card" style="border-top-color:#2d7a3a;">
+        <div class="cnum" style="color:rgba(45,122,58,0.08);">2</div>
+        <div style="display:inline-block;background:#2d7a3a;color:#ffffff;font-size:11px;font-weight:900;letter-spacing:2px;padding:4px 12px;border-radius:4px;margin-bottom:10px;text-transform:uppercase;">Tuần 3</div>
+        <div class="ct">Tư Vấn Sâu và Chốt</div>
+        <div class="cb" style="font-size:15px;">Tập trung vào lead đang nóng. Tư vấn sâu sản phẩm, chính sách tài chính, xử lý băn khoăn. Đẩy booking càng nhiều càng tốt.</div>
+        <div style="margin-top:12px;padding:10px 12px;background:rgba(51,158,78,0.08);border-radius:6px;border-left:3px solid #339E4E;">
+          <div style="font-size:13px;font-weight:700;color:#1E6B30;margin-bottom:3px;">Luôn nhớ:</div>
+          <div style="font-size:13px;color:#333;line-height:1.5;">Nhiều booking = nhiều lựa chọn căn khi khớp. Đừng chờ khách "chắc chắn 100%" mới đặt.</div>
+        </div>
+        <div style="margin-top:10px;border-top:1px solid rgba(51,158,78,0.15);padding-top:10px;">
+          <div style="font-size:12px;font-weight:700;color:#1E6B30;margin-bottom:4px;">Mốc cuối T3:</div>
+          <div style="font-size:14px;color:#333;">Ít nhất 3 booking. 3 khách khác đang trong giai đoạn quyết định.</div>
+        </div>
+      </div>
+      <div class="card" style="border-top-color:#339E4E;">
+        <div class="cnum" style="color:rgba(51,158,78,0.08);">3</div>
+        <div style="display:inline-block;background:#339E4E;color:#ffffff;font-size:11px;font-weight:900;letter-spacing:2px;padding:4px 12px;border-radius:4px;margin-bottom:10px;text-transform:uppercase;">Tuần 4</div>
+        <div class="ct">Chốt Nốt và Bảo Vệ Booking</div>
+        <div class="cb" style="font-size:15px;">Chốt các khách còn lại, hỗ trợ thủ tục, giữ khách không rút booking. Đảm bảo đủ booking để khớp căn tốt ngày ra hàng.</div>
+        <div style="margin-top:12px;padding:10px 12px;background:rgba(51,158,78,0.08);border-radius:6px;border-left:3px solid #339E4E;">
+          <div style="font-size:13px;font-weight:700;color:#1E6B30;margin-bottom:3px;">Luôn nhớ:</div>
+          <div style="font-size:13px;color:#333;line-height:1.5;">Booking nhiều mới có khả năng khớp căn đẹp. Ít booking = ít quyền lực khi phân bổ căn.</div>
+        </div>
+        <div style="margin-top:10px;border-top:1px solid rgba(51,158,78,0.15);padding-top:10px;">
+          <div style="font-size:12px;font-weight:700;color:#1E6B30;margin-bottom:4px;">Mốc cuối T4:</div>
+          <div style="font-size:14px;color:#333;font-weight:700;color:#339E4E;">Tối thiểu 5 booking. Khách đã nộp tiền và có xác nhận.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-light"><div class="bh-badge">BH</div>BIGHOMES 15 &nbsp;|&nbsp; LẬP MỤC TIÊU 30 NGÀY</div>
+</div>
+
+<!-- SLIDE 8: CHI TIẾT TỪNG TUẦN -->
+<div class="slide bg-content" id="s8">
+  <div class="bar-top"></div><div class="bar-left"></div><div class="bar-right"></div>
+  <div class="content" style="position:relative;z-index:3;">
+    <div class="a1" style="font-size:12px;font-weight:700;letter-spacing:3px;color:#1E6B30;text-transform:uppercase;margin-bottom:4px;">Chi Tiết Hàng Tuần</div>
+    <div class="a2" style="font-size:28px;font-weight:900;color:#0d0d0d;margin-bottom:14px;">Ưu Tiên + Hành Động + Mốc</div>
+    <div class="a3" style="overflow:hidden;border-radius:12px;border:1.5px solid rgba(51,158,78,0.2);box-shadow:0 4px 22px rgba(0,0,0,0.09);margin-bottom:12px;">
+      <table style="width:100%;border-collapse:collapse;">
+        <thead>
+          <tr style="background:#1A3A1A;">
+            <th style="padding:11px 14px;text-align:left;font-size:11px;letter-spacing:2px;color:rgba(255,255,255,0.75);text-transform:uppercase;width:10%;">Tuần</th>
+            <th style="padding:11px 14px;text-align:left;font-size:11px;letter-spacing:2px;color:rgba(255,255,255,0.75);text-transform:uppercase;width:24%;">Trọng Tâm Ưu Tiên</th>
+            <th style="padding:11px 14px;text-align:left;font-size:11px;letter-spacing:2px;color:rgba(255,255,255,0.75);text-transform:uppercase;width:38%;">Hành Động Hàng Ngày</th>
+            <th style="padding:11px 14px;text-align:left;font-size:11px;letter-spacing:2px;color:rgba(255,255,255,0.75);text-transform:uppercase;width:28%;">Mốc Kiểm Tra</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="background:#fff;border-bottom:1px solid rgba(51,158,78,0.1);">
+            <td style="padding:13px 14px;font-weight:900;color:#1A3A1A;font-size:14px;">T1 - T2</td>
+            <td style="padding:13px 14px;font-size:14px;color:#1a1a1a;font-weight:500;">Tiếp cận data rộng. Phân loại nóng, ấm, lạnh. Nuôi lead.</td>
+            <td style="padding:13px 14px;font-size:14px;color:#1a1a1a;font-weight:500;">A tiếp cận data mới + follow-up lead. Gặp trực tiếp khách nóng. Đề nghị booking ngay nếu khách sẵn sàng.</td>
+            <td style="padding:13px 14px;font-size:14px;color:#339E4E;font-weight:700;">W data tiếp cận. Z lead đang nuôi. Booking đầu tiên nếu có khách nóng.</td>
+          </tr>
+          <tr style="background:#f5fbf5;border-bottom:1px solid rgba(51,158,78,0.1);">
+            <td style="padding:13px 14px;font-weight:900;color:#1A3A1A;font-size:14px;">T3</td>
+            <td style="padding:13px 14px;font-size:14px;color:#1a1a1a;font-weight:500;">Lead nóng. Tư vấn sâu, xử lý băn khoăn, đẩy booking.</td>
+            <td style="padding:13px 14px;font-size:14px;color:#1a1a1a;font-weight:500;">Gặp sâu từng lead nóng. Tư vấn chính sách tài chính. Đặt lịch quyết định rõ ràng với từng khách.</td>
+            <td style="padding:13px 14px;font-size:14px;color:#339E4E;font-weight:700;">Tối thiểu 3 booking. 3 khách khác đang trong giai đoạn chốt.</td>
+          </tr>
+          <tr style="background:#fff;">
+            <td style="padding:13px 14px;font-weight:900;color:#1A3A1A;font-size:14px;">T4</td>
+            <td style="padding:13px 14px;font-size:14px;color:#1a1a1a;font-weight:500;">Chốt nốt, bảo vệ booking đã có, hỗ trợ thủ tục.</td>
+            <td style="padding:13px 14px;font-size:14px;color:#1a1a1a;font-weight:500;">Liên lạc hàng ngày với từng booking. Xử lý phát sinh. Chốt các khách còn đang do dự từ tuần 3.</td>
+            <td style="padding:13px 14px;font-size:15px;color:#1E6B30;font-weight:900;">Tối thiểu 5 booking. Tất cả đã nộp tiền.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="a4" style="background:#1A3A1A;border-radius:8px;padding:12px 20px;display:flex;align-items:center;gap:14px;">
+      <div style="font-size:22px;color:#5BBF70;flex-shrink:0;">!</div>
+      <div style="font-size:15px;color:rgba(255,255,255,0.9);line-height:1.5;font-weight:500;">Booking sớm = khách giữ quyền chọn căn đẹp nhất ngày mở bán. Đây là lý do thuyết phục mạnh nhất để khách không trì hoãn. Dùng mọi cơ hội, không chỉ tuần 4.</div>
+    </div>
+  </div>
+  <div class="footer-light"><div class="bh-badge">BH</div>BIGHOMES 15 &nbsp;|&nbsp; LẬP MỤC TIÊU 30 NGÀY</div>
+</div>
+
+<!-- SLIDE 9: TEMPLATE CÁ NHÂN TỰ ĐIỀN -->
+<div class="slide bg-practice" id="s9">
+  <div class="border-practice"></div>
+  <div class="content" style="position:relative;z-index:3;">
+    <div style="display:flex;align-items:center;margin-bottom:16px;">
+      <div class="badge-p a1">Tự Điền Kế Hoạch</div>
+      <div class="badge-t a1">10 Phút</div>
+    </div>
+    <div class="a2" style="font-size:30px;font-weight:900;color:#0d0d0d;margin-bottom:18px;line-height:1.2;">Kế Hoạch Cá Nhân: Đợt Ra Hàng Hạ Long Xanh</div>
+    <div class="g2 a3">
+      <div>
+        <div class="steps">
+          <div class="srow"><div class="snum">1</div><div><div class="stxt">Số booking mục tiêu: <span style="color:#1E6B30;">___</span></div></div></div>
+          <div class="srow"><div class="snum">2</div><div><div class="stxt">Tỷ lệ chuyển đổi của tôi: <span style="color:#1E6B30;">___%</span></div></div></div>
+          <div class="srow"><div class="snum">3</div><div><div class="stxt">Số gặp cần: <span style="color:#1E6B30;">___</span> · Lead cần: <span style="color:#1E6B30;">___</span></div></div></div>
+          <div class="srow"><div class="snum">4</div><div><div class="stxt">Hành động mỗi ngày: <span style="color:#339E4E;font-weight:900;">___</span></div></div></div>
+        </div>
+      </div>
+      <div>
+        <div class="steps">
+          <div class="srow"><div class="snum" style="background:#1A3A1A;">T1</div><div><div class="stxt">Nguồn ưu tiên: <span style="color:#1E6B30;">___________</span></div><div class="snote">Mốc: ___________________________</div></div></div>
+          <div class="srow"><div class="snum" style="background:#2d7a3a;">T2</div><div><div class="stxt">Nguồn ưu tiên: <span style="color:#1E6B30;">___________</span></div><div class="snote">Mốc: ___________________________</div></div></div>
+          <div class="srow"><div class="snum" style="background:#339E4E;">T3</div><div><div class="stxt">Lead nóng cần gặp: <span style="color:#1E6B30;">___</span> người</div><div class="snote">Mốc: ___________________________</div></div></div>
+          <div class="srow"><div class="snum" style="background:#4caf50;">T4</div><div><div class="stxt">Chốt và nộp tiền: <span style="color:#339E4E;font-weight:900;">___ booking</span></div><div class="snote">Mốc: ___________________________</div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="pcap a4">Mục tiêu: Hoàn thành bảng trước khi bước vào phần chia sẻ.</div>
+  </div>
+  <div class="footer-light"><div class="bh-badge">BH</div>BIGHOMES 15 &nbsp;|&nbsp; LẬP MỤC TIÊU 30 NGÀY</div>
+</div>
+
+<!-- SLIDE 10: SECTION OPENER PHẦN 3 -->
+<div class="slide bg-section" id="s10">
+  <div class="bar-top"></div><div class="bar-left"></div><div class="bar-right"></div>
+  <div class="content" style="position:relative;z-index:3;">
+    <div class="a1" style="font-size:12px;font-weight:700;letter-spacing:3px;color:#1E6B30;text-transform:uppercase;margin-bottom:16px;">Phần 03 · Chia Sẻ Cá Nhân</div>
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:32px;">
+      <div class="a2" style="font-size:72px;font-weight:900;color:#0d0d0d;line-height:1.05;text-transform:uppercase;letter-spacing:-2px;">Cam Kết<br><span style="color:#1E6B30;">Trước</span><br>Team</div>
+      <div class="a2" style="font-size:260px;font-weight:900;line-height:0.85;color:rgba(51,158,78,0.15);pointer-events:none;letter-spacing:-12px;flex-shrink:0;margin-top:-10px;">03</div>
+    </div>
+    <div class="a3" style="width:100%;height:2px;background:linear-gradient(90deg,#2E7D32,rgba(51,158,78,0.08));margin:22px 0 20px;"></div>
+    <div class="a4" style="font-size:22px;font-style:italic;font-weight:500;color:#3a3a3a;line-height:1.55;">Nói ra trước team là cam kết. Không nói ra là chỉ với chính mình.</div>
+  </div>
+  <div class="footer-parchment"><div class="bh-badge">BH</div>BIGHOMES 15 &nbsp;|&nbsp; LẬP MỤC TIÊU 30 NGÀY</div>
+</div>
+
+<!-- SLIDE 11: 3 CÂU HỎI KHI CHIA SẺ -->
+<div class="slide bg-content" id="s11">
+  <div class="bar-top"></div><div class="bar-left"></div><div class="bar-right"></div>
+  <div class="content" style="position:relative;z-index:3;max-width:860px;">
+    <div class="a1" style="font-size:12px;font-weight:700;letter-spacing:3px;color:#1E6B30;text-transform:uppercase;margin-bottom:4px;">Mỗi Người Trả Lời</div>
+    <div class="a2" style="font-size:32px;font-weight:900;color:#0d0d0d;margin-bottom:8px;">3 Câu Khi Chia Sẻ</div>
+    <div class="a2" style="font-size:15px;color:#555;font-style:italic;margin-bottom:20px;">Mục tiêu tối thiểu của team: 5 booking mỗi người. Đặt mục tiêu cao hơn nếu bạn có năng lực.</div>
+    <div class="a3">
+      <div style="display:flex;align-items:flex-start;gap:20px;background:#f5fbf5;border:2px solid #339E4E;border-radius:14px;padding:18px 22px;margin-bottom:12px;box-shadow:0 4px 16px rgba(51,158,78,0.12);">
+        <div style="font-size:36px;font-weight:900;color:#1A3A1A;min-width:40px;line-height:1;">01</div>
+        <div style="padding-top:4px;">
+          <div style="font-size:21px;font-weight:700;color:#0d0d0d;line-height:1.5;">Mục tiêu booking của tôi đợt này là <span style="color:#1E6B30;font-size:26px;font-weight:900;">___</span> booking.</div>
+          <div style="font-size:13px;color:#1E6B30;font-weight:700;margin-top:4px;">Tối thiểu: 5 booking. Càng nhiều, khả năng khớp căn đẹp càng cao.</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:20px;background:#f5fbf5;border:1.5px solid rgba(51,158,78,0.3);border-radius:14px;padding:18px 22px;margin-bottom:12px;">
+        <div style="font-size:36px;font-weight:900;color:#2d7a3a;min-width:40px;line-height:1;">02</div>
+        <div style="padding-top:4px;">
+          <div style="font-size:21px;font-weight:700;color:#0d0d0d;line-height:1.5;">Nguồn khách ưu tiên của tôi là <span style="color:#1E6B30;">___________</span>. Tổng data tiếp cận: <span style="color:#1E6B30;">___</span> liên hệ.</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:20px;background:#f5fbf5;border:1.5px solid rgba(51,158,78,0.3);border-radius:14px;padding:18px 22px;">
+        <div style="font-size:36px;font-weight:900;color:#339E4E;min-width:40px;line-height:1;">03</div>
+        <div style="padding-top:4px;">
+          <div style="font-size:21px;font-weight:700;color:#0d0d0d;line-height:1.5;">Hành động đầu tiên ngày mai lúc <span style="color:#1E6B30;">___ giờ</span> là <span style="color:#1E6B30;">____________</span>.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-light"><div class="bh-badge">BH</div>BIGHOMES 15 &nbsp;|&nbsp; LẬP MỤC TIÊU 30 NGÀY</div>
+</div>
+
+<!-- SLIDE 12: CLOSING -->
+<div class="slide bg-closing" id="s12">
+  <div class="bar-top"></div><div class="bar-left"></div><div class="bar-right"></div>
+  <div class="content">
+    <div class="eyebrow-d a1">3 Điều Cốt Lõi Mang Về</div>
+    <div class="trow a2">
+      <div class="tnum">01</div>
+      <div class="ttxt">Mục tiêu phải tính được ngược từ booking về <span class="tgreen">hành động mỗi ngày.</span></div>
+    </div>
+    <div class="trow a3">
+      <div class="tnum">02</div>
+      <div class="ttxt">30 ngày chia 3 giai đoạn rõ: tìm kiếm, nuôi dưỡng, <span class="tgreen">chốt và bảo vệ.</span></div>
+    </div>
+    <div class="trow a4">
+      <div class="tnum">03</div>
+      <div class="ttxt">Cuối mỗi tuần đối chiếu số thực với kế hoạch. <span class="tgreen">Điều chỉnh ngay, không để trượt hai tuần.</span></div>
+    </div>
+    <div class="a5" style="margin-top:22px;text-align:center;">
+      <div style="font-size:20px;font-style:italic;color:rgba(255,255,255,0.78);line-height:1.6;">"Kế hoạch không cần hoàn hảo.<br>Cần đủ cụ thể để ngày mai biết làm gì ngay khi thức dậy."</div>
+    </div>
+  </div>
+  <div class="footer-dark"><div class="bh-badge">BH</div>BIGHOMES 15 &nbsp;|&nbsp; LẬP MỤC TIÊU 30 NGÀY</div>
+</div>
+
+<!-- Particle canvas -->
+<canvas id="pcv" style="position:fixed;inset:0;z-index:0;pointer-events:none;"></canvas>
+
+<!-- Nav -->
+<div class="nav">
+  <span class="nav-counter" id="ctr">1 / 12</span>
+  <button class="nav-btn" onclick="go(-1)">← Trước</button>
+  <button class="nav-btn" onclick="go(1)">Tiếp →</button>
+  <button class="nav-btn" id="fsBtn" onclick="toggleFS()">⛶ Full</button>
+</div>
+
+<script>
+const slides=document.querySelectorAll('.slide');
+const N=slides.length;
+let cur=0;
+
+function retrigger(el){
+  el.querySelectorAll('.a1,.a2,.a3,.a4,.a5,.aL,.aR,.aS').forEach(e=>{
+    [...e.classList].filter(c=>/^a[1-5LRS]$/.test(c)).forEach(c=>{
+      e.classList.remove(c);void e.offsetWidth;e.classList.add(c);
+    });
+  });
+  el.querySelectorAll('[style*="animation"]').forEach(e=>{
+    const a=e.style.animation;if(!a||a.includes('infinite'))return;
+    e.style.animation='none';void e.offsetWidth;e.style.animation=a;
+  });
+}
+
+function show(n){
+  slides[cur].classList.remove('active');
+  cur=(n+N)%N;
+  slides[cur].classList.add('active');
+  document.getElementById('ctr').textContent=(cur+1)+' / '+N;
+  retrigger(slides[cur]);
+}
+function go(d){show(cur+d);}
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key==='ArrowDown')go(1);
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp')go(-1);
+});
+
+function toggleFS(){
+  if(!document.fullscreenElement){document.documentElement.requestFullscreen();document.getElementById('fsBtn').textContent='✕ Exit';}
+  else{document.exitFullscreen();document.getElementById('fsBtn').textContent='⛶ Full';}
+}
+
+// Particle — Bighomes green
+(function(){
+  const cv=document.getElementById('pcv'),cx=cv.getContext('2d'),pts=[];
+  function resize(){cv.width=innerWidth;cv.height=innerHeight;}
+  resize();window.addEventListener('resize',resize);
+  for(let i=0;i<28;i++)pts.push({
+    x:Math.random()*innerWidth,y:Math.random()*innerHeight,
+    r:Math.random()*2.2+0.7,
+    vx:(Math.random()-.5)*.35,vy:(Math.random()-.5)*.35-.12,
+    a:Math.random()*.38+.08,da:(Math.random()>.5?1:-1)*.003
+  });
+  function draw(){
+    cx.clearRect(0,0,cv.width,cv.height);
+    pts.forEach(p=>{
+      cx.beginPath();cx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      cx.fillStyle=`rgba(51,158,78,${p.a})`;cx.fill();
+      p.x+=p.vx;p.y+=p.vy;p.a+=p.da;
+      if(p.a>.46||p.a<.07)p.da*=-1;
+      if(p.x<-4)p.x=cv.width+4;if(p.x>cv.width+4)p.x=-4;
+      if(p.y<-4)p.y=cv.height+4;if(p.y>cv.height+4)p.y=-4;
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// Inject charIn
+const st=document.createElement('style');
+st.textContent='@keyframes charIn{to{opacity:1;transform:translateY(0)}}';
+document.head.appendChild(st);
+
+show(0);
+</script>
+</body>
+</html>
