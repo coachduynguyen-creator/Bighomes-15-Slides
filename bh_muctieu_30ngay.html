@@ -646,8 +646,8 @@ function applyMode(){
   } else {
     document.body.style.overflow='hidden';
     document.body.style.height='100vh';
-    slides.forEach(s=>{
-      s.style.display='none';
+    slides.forEach((s,i)=>{
+      s.style.display= i===cur ? 'flex' : 'none';
       s.style.width='100vw';
       s.style.height='100vh';
       s.style.minHeight='';
@@ -655,13 +655,12 @@ function applyMode(){
     });
     document.querySelector('.nav').style.display='flex';
     document.getElementById('pcv').style.display='block';
-    show(cur);
+    document.getElementById('ctr').textContent=(cur+1)+' / '+N;
   }
 }
 
 applyMode();
 window.addEventListener('resize',()=>applyMode());
-if(!isMobile()) show(0);
 </script>
 
 <style>
